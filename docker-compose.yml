@@ -1,0 +1,32 @@
+# Local development infrastructure.
+#   docker compose up -d db        -> PostgreSQL
+#   docker compose --profile dev up -> PostgreSQL + Mailpit (local SMTP catcher)
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: afterkey-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: afterkey
+      POSTGRES_PASSWORD: afterkey
+      POSTGRES_DB: afterkey
+    ports:
+      - "5432:5432"
+    volumes:
+      - afterkey_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U afterkey -d afterkey"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: afterkey-mailpit
+    restart: unless-stopped
+    profiles: ["dev"]
+    ports:
+      - "8025:8025" # web UI / test mailbox
+      - "1025:1025" # SMTP
+volumes:
+  afterkey_pgdata:

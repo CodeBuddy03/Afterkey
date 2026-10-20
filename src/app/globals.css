@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  AfterKey premium glass design language: deep midnight canvas, layered
+  translucent glass surfaces, fine silver borders, restrained blue-violet
+  accents, muted white typography. Motion is subtle, purposeful, and respects
+  prefers-reduced-motion. Contrast takes precedence over effects.
+*/
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-ivory text-charcoal antialiased;
+    font-feature-settings: "kern", "liga";
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background-color: rgba(155, 184, 255, 0.3);
+    color: #f5f6fa;
+  }
+
+  :focus-visible {
+    outline: 2px solid #9bb8ff;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  [data-interactive]:focus-visible {
+    outline: 2px solid #9bb8ff;
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-navy tracking-tight;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+  }
+}
+
+@layer components {
+  /* Translucent glass surface with fine border and blur (progressive). */
+  .glass {
+    background-color: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .glass-strong {
+    background-color: rgba(13, 16, 23, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  /* Ambient blue-violet glow behind hero/feature content. */
+  .ambient::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 70%;
+    pointer-events: none;
+    background:
+      radial-gradient(50% 55% at 25% 20%, rgba(155, 184, 255, 0.14), transparent 70%),
+      radial-gradient(45% 55% at 75% 10%, rgba(182, 162, 255, 0.12), transparent 70%);
+    z-index: 0;
+  }
+
+  /* Signature gradient CTA. */
+  .cta-gradient {
+    background-image: linear-gradient(135deg, #9bb8ff 0%, #b6a2ff 100%);
+    color: #0b0d14;
+  }
+  .cta-gradient:hover {
+    filter: brightness(1.06);
+  }
+  .cta-gradient:active {
+    filter: brightness(0.96);
+  }
+
+  .prose-basic p {
+    @apply mb-4 leading-7 text-charcoal;
+  }
+
+  .prose-basic ul {
+    @apply mb-4 list-disc space-y-2 pl-6 leading-7 text-charcoal;
+  }
+
+  .prose-basic ol {
+    @apply mb-4 list-decimal space-y-2 pl-6 leading-7 text-charcoal;
+  }
+
+  .prose-basic a {
+    @apply text-champagne-600 underline decoration-champagne/50 underline-offset-4 hover:decoration-champagne-600;
+  }
+
+  .prose-basic h2 {
+    @apply mb-3 mt-8 text-xl font-semibold;
+  }
+
+  .prose-basic h3 {
+    @apply mb-2 mt-6 text-lg font-semibold;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  .scrollbar-subtle::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .scrollbar-subtle::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  .scrollbar-subtle::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

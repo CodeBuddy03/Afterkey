@@ -1,0 +1,41 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+*.log
+npm-debug.log*
+
+# local env files — never commit secrets
+.env
+.env.local
+.env.*.local
+.env.production
+
+# testing
+/coverage/
+/playwright-report/
+/test-results/
+/blob-report/
+/.playwright/
+
+# local data (dev object storage, exports)
+/var/
+
+# typescript
+*.tsbuildinfo
+
+# docs build
+/.cache/
+
+# freebuff workspace metadata
+.freebuff/

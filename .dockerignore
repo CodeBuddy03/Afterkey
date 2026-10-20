@@ -1,0 +1,26 @@
+# Never let secrets or local state into image layers.
+.env
+.env.*
+!.env.example
+
+# Dependencies and build output (produced inside the image).
+node_modules
+.next
+out
+build
+
+# Local runtime state.
+var
+*.log
+
+# Tests, tooling and repo metadata (not needed by any image target).
+tests
+e2e
+test-results
+playwright-report
+coverage
+.github
+.vscode
+.idea
+*.tsbuildinfo
+next-env.d.ts

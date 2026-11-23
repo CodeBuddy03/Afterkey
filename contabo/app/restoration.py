@@ -179,6 +179,7 @@ def plan(uid):
     run('INSERT OR IGNORE INTO legacy_plans(user_id,last_checkin) VALUES(?,?)', (uid, now()))
     p = dict(one('SELECT * FROM legacy_plans WHERE user_id=?', (uid,)))
     p['due_at'] = p['last_checkin'] + p['frequency']*86400
+    p['server_now'] = now()
     p['grace_ends_at'] = p['due_at'] + p['grace']*86400
     p['checkin_status'] = 'current' if now() <= p['due_at'] else ('grace period' if now() <= p['grace_ends_at'] else 'follow-up needed')
     a = one("SELECT * FROM activations WHERE owner_id=? AND status IN ('pending','approved') ORDER BY id DESC LIMIT 1", (uid,))

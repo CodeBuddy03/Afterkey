@@ -420,7 +420,7 @@ def session_user(request: Request) -> sqlite3.Row | None:
         row = conn.execute(
             "SELECT u.id, u.email, u.created_at FROM sessions s"
             " JOIN users u ON u.id = s.user_id"
-            " WHERE s.token_hash=? AND s.expires_at > ?",
+            " WHERE s.token_hash=? AND s.expires_at > ? AND u.deleted_at IS NULL",
             (token_digest(token), int(time.time())),
         ).fetchone()
     return row
@@ -508,6 +508,7 @@ async def lifespan(_: FastAPI):
     global IP_SALT
     setup_logging()
     init_db()
+    restoration.migrate()
     IP_SALT = resolve_salt()
     log.info(
         "afterkey api up db=%s sender=%s admin_set=%s key_set=%s",
@@ -728,7 +729,7 @@ def normalise_email(value: object) -> str:
 def find_user(email: str) -> sqlite3.Row | None:
     with db() as conn:
         return conn.execute(
-            "SELECT id, email, pw_hash, created_at FROM users WHERE email=?", (email,)
+            "SELECT id, email, pw_hash, created_at FROM users WHERE email=? AND deleted_at IS NULL", (email,)
         ).fetchone()
 
 
@@ -937,8 +938,9 @@ async def reset_confirm(request: Request) -> JSONResponse:
 
     digest = token_digest(token)
     with db() as conn:
+        conn.execute("BEGIN IMMEDIATE")
         row = conn.execute(
-            "SELECT user_id, expires_at, used_at FROM resets WHERE token_hash=?", (digest,)
+            "SELECT r.user_id, r.expires_at, r.used_at FROM resets r JOIN users u ON u.id=r.user_id WHERE r.token_hash=? AND u.deleted_at IS NULL", (digest,)
         ).fetchone()
         if not row or row["used_at"] or row["expires_at"] < now:
             return JSONResponse({"ok": False, "error": "expired"}, status_code=410)
@@ -946,10 +948,11 @@ async def reset_confirm(request: Request) -> JSONResponse:
             "UPDATE resets SET used_at=? WHERE token_hash=?", (now, digest)
         )
         conn.execute(
-            "UPDATE users SET pw_hash=? WHERE id=?", (hash_password(password), row["user_id"])
+            "UPDATE users SET pw_hash=?, verified_at=COALESCE(verified_at,?) WHERE id=?", (hash_password(password), now, row["user_id"])
         )
         # Every other session for this account is now stale.
         conn.execute("DELETE FROM sessions WHERE user_id=?", (row["user_id"],))
+        conn.commit()
 
     log.info("password reset user_id=%s", row["user_id"])
     return JSONResponse({"ok": True})
@@ -1174,8 +1177,7 @@ async def upload_file(entry_id: int, request: Request) -> JSONResponse:
     if not name.lower().endswith(suffix):
         name = f"{name}{suffix}"
 
-    if row["file_path"]:
-        drop_media(row["file_path"])
+    # Retain previous attachments in private storage for recovery.
     with db() as conn:
         conn.execute(
             "UPDATE entries SET file_name=?, file_type=?, file_size=?, file_path=?, updated_at=?"
@@ -1792,6 +1794,10 @@ If this should not have happened, withdraw the person's access now.</td></tr>"""
         log.info("legacy first open heir_id=%s", row["id"])
 
     return response
+
+
+import restoration
+restoration.install(globals())
 
 
 if __name__ == "__main__":

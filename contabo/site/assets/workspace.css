@@ -1,0 +1,58 @@
+/* Extends the existing account layout; all colors and typography come from auth.css. */
+[hidden] { display:none !important; }
+.workspace { max-width:1240px; margin:0 auto; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-bottom:24px; }
+.section { padding:24px; margin-bottom:22px; }
+.section h2 { font-size:19px; font-weight:600; margin:0 0 14px; letter-spacing:-.02em; }
+.section h3 { font-size:16px; margin:0 0 10px; }
+.section p,.muted { color:var(--text-2); font-size:14px; }
+.stat { padding:20px; }
+.stat strong { display:block; font-size:26px; font-weight:500; margin:8px 0; }
+.stat span { color:var(--text-2); font-size:13px; }
+.actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.actions .btn,.btn.compact { width:auto; min-height:42px; height:auto; padding:10px 17px; font-size:14px; }
+.notice { padding:14px 18px; border:1px solid var(--line); border-radius:12px; margin-bottom:20px; font-size:14px; color:var(--text-2); }
+#notice[data-error=true],.form-error { color:var(--err); }
+#notice { position:sticky; top:10px; z-index:6; background:var(--bg-raised); }
+.stack { display:grid; gap:18px; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+label { display:block; font-size:13px; color:var(--text-2); margin-bottom:7px; }
+input:not([type=checkbox]) { width:100%; padding:12px 16px; color:var(--text); background:#0a0a0a; border:1px solid #2b2b2b; border-radius:var(--radius); font:inherit; min-height:48px; }
+input[type=checkbox] { accent-color:var(--ivory); width:18px; height:18px; vertical-align:middle; margin-right:8px; }
+.check { display:flex; align-items:center; gap:8px; margin:12px 0; }
+.toolbar { display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+.toolbar input { flex:1; min-width:160px; }
+.toolbar select { width:auto; max-width:100%; }
+.memory { padding:20px; border-bottom:1px solid var(--line-soft); }
+.memory:last-child { border-bottom:0; }
+.memory h3 { margin:0 0 6px; font-weight:500; font-size:17px; }
+.memory p { margin:8px 0 14px; white-space:pre-wrap; overflow-wrap:anywhere; }
+.memory .meta { font-size:12px; color:var(--text-2); margin-bottom:12px; }
+.memory .actions { margin-top:12px; }
+.memory-preview { max-height:340px; max-width:100%; border-radius:10px; margin-top:14px; }
+audio { width:100%; max-width:500px; }
+.document-preview { width:100%; height:400px; border:1px solid var(--line); background:var(--bg); }
+.body-text { white-space:pre-wrap; overflow-wrap:anywhere; }
+.codes { white-space:pre-wrap; overflow-wrap:anywhere; font-size:15px; padding:18px; border:1px solid var(--line); border-radius:10px; }
+dialog { max-height:90svh; overflow:auto; }
+.dialog__body .field { margin-bottom:16px; }
+.dialog__body { position:relative; }
+.mobile-menu { display:none; }
+.step-list { display:flex; list-style:none; padding:0; gap:10px; flex-wrap:wrap; margin:24px 0; }
+.step-list li { color:var(--text-2); border:1px solid var(--line); border-radius:20px; padding:7px 12px; font-size:12px; }
+.step-list li.current { color:var(--text); background:var(--surface); }
+.claim-shell { max-width:820px; margin:0 auto; padding:40px 20px; }
+.claim-shell h1 { font-size:clamp(28px,4vw,40px); font-weight:600; letter-spacing:-.03em; }
+.side { position:sticky; top:0; height:100svh; }
+.text-link { text-decoration:underline; text-underline-offset:4px; }
+@media(max-width:1000px) { .stats { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:860px) {
+ .grid,.form-grid { grid-template-columns:1fr; }
+ .mobile-menu { display:grid; gap:4px; padding:14px 18px; border-bottom:1px solid var(--line); background:var(--bg); }
+ .mobile-menu a { padding:12px; border-radius:9px; color:var(--text-2); }
+ .mobile-menu a[aria-current=page] { background:var(--surface); color:var(--text); }
+ .section { padding:20px; }
+ #notice { top:74px; }
+}
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } }

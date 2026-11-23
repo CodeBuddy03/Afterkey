@@ -1,0 +1,14 @@
+[Unit]
+Description=AfterKey Life Check and account notifications
+After=network-online.target afterkey-api.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/afterkey
+ExecStart=/opt/afterkey/venv/bin/python /opt/afterkey/app/reminders.py
+User=root
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/opt/afterkey/data /opt/afterkey/logs
+PrivateTmp=true

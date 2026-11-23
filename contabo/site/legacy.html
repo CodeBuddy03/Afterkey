@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The account left in your keeping | AfterKey</title>
+<meta name="description" content="The complete AfterKey account, handed to the person who was named.">
+<meta name="theme-color" content="#080808">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48 64x64 128x128 256x256">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/legacy.css">
+</head>
+<body>
+<a class="skip" href="#record">Skip to the account</a>
+
+<main class="wrap">
+  <header class="bar">
+    <a class="brand" href="/" aria-label="AfterKey home">
+      <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+        <g stroke="currentColor" stroke-width="5" stroke-linecap="butt">
+          <line x1="10" y1="32" x2="54" y2="32"/>
+          <line x1="32" y1="10" x2="32" y2="54"/>
+          <line x1="16.44" y1="16.44" x2="47.56" y2="47.56"/>
+          <line x1="47.56" y1="16.44" x2="16.44" y2="47.56"/>
+        </g>
+      </svg>
+      <span>afterkey<span class="dot">.</span></span>
+    </a>
+    <span class="tag" data-badge>Private</span>
+  </header>
+
+  <section class="intro" data-intro hidden>
+    <p class="eyebrow">In your keeping</p>
+    <h1>The account, left for you.</h1>
+    <p class="lede" data-lede></p>
+
+    <dl class="counts" data-counts hidden>
+      <div><dt data-count-entries>0</dt><dd>records</dd></div>
+      <div><dt data-count-files>0</dt><dd>files</dd></div>
+      <div><dt data-count-secrets>0</dt><dd>credentials</dd></div>
+    </dl>
+
+    <div class="actions">
+      <a class="btn" href="/api/legacy/export" download>Download the whole account</a>
+      <button class="btn btn--quiet" type="button" data-signout>Close this window</button>
+    </div>
+    <p class="note">
+      This is the account as it was left, with every letter, credential, document and place.
+      You can read and download all of it. The person who left it can withdraw access at any time,
+      and the link stops working the moment they do.
+    </p>
+  </section>
+
+  <nav class="jump" data-jump hidden aria-label="Sections"></nav>
+
+  <section id="record" class="record" aria-live="polite" data-record></section>
+
+  <section class="state" data-state>
+    <p class="state__pulse" aria-hidden="true"></p>
+    <p data-state-text>Opening the account.</p>
+  </section>
+
+  <footer class="foot">
+    <span>AfterKey</span>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/terms.html">Terms</a>
+  </footer>
+</main>
+
+<script type="module" src="/assets/legacy.js" defer></script>
+</body>
+</html>
